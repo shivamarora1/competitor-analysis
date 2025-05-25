@@ -17,10 +17,10 @@ logger = logging.getLogger(__name__)
 class CompanyDescription(BaseModel):
     description: str
     category: str
-    year_founded: str
+    year_founded: int
     employees: str
     annual_revenue: str
-    global_rank: str
+    global_rank: int
     visits: str
     bounce_rate: str
     avg_visit_duration: str
