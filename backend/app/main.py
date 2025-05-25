@@ -62,9 +62,7 @@ async def scrape_website(website_name: str, q: Union[str, None] = None):
         company_result = results[website_name]
 
         logger.info(f"Result {company_result}")
-
-        return []
-
+        return company_result
     except Exception as e:
         logger.error(f"Error analyzing company {website_name}: {str(e)}", exc_info=True)
         raise HTTPException(

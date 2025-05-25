@@ -38,28 +38,41 @@ similarweb_scrapper_server = MCPServerStdio(
 )
 
 similarweb_scrapper_agent = Agent(
-    "openai:gpt-4.1-mini",
+    # "openai:gpt-4o-mini",
+    "openai:gpt-4o",
     output_type=CompanyDescription,
     mcp_servers=[similarweb_scrapper_server],
     retries=1,
     system_prompt="Strictly follow these steps:"
     "1. `scraping_browser_navigate`: To navigate to given url"
-    "2. `scraping_browser_get_text`: To extract textual content",
+    "2. `scraping_browser_get_text`: To extract textual content"
+    "Don't use any other tool to scrape information",
     model_settings=ModelSettings(request_timeout=REQUEST_TIMEOUT, max_tokens=2048),
 )
 
 
+async def scrape_website_data(prompt):
+    async with similarweb_scrapper_agent.run_mcp_servers():
+        result = await asyncio.wait_for(
+            similarweb_scrapper_agent.run(prompt), timeout=REQUEST_TIMEOUT
+        )
+        return result
+
+
 async def scrape_website_from_similarweb(website: str):
-    prompt = f"website: https://www.similarweb.com/website/{website}"
+    prompt = lambda website: f"website: https://www.similarweb.com/website/{website}"
 
     try:
-        async with similarweb_scrapper_agent.run_mcp_servers():
-            result = await asyncio.wait_for(
-                similarweb_scrapper_agent.run(prompt), timeout=REQUEST_TIMEOUT
-            )
-            logger.info(f"successfully scrapped data for {website}")
-            logger.info(result.output)
-            return result.output
+        result = await scrape_website_data(prompt(website))
+        logger.info(f"successfully scrapped data for {website}")
+        logger.info(result.output)
+
+        competitors = []
+        for c in result.output.competitors:
+            logger.info(f"fetching data for {c}")
+            competitor_result = await scrape_website_data(prompt(c))
+            competitors.append(competitor_result.output)
+        return {"company": result.output, "competitors": competitors}
     except ModelHTTPError as e:
         logger.error(f"API error for {website}: {str(e)}", exc_info=True)
         return None
