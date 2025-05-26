@@ -71,15 +71,19 @@ def main():
     )
     st.divider()
 
-    website = st.text_input("👉 What's your website name?", placeholder="microsoft.com")
-    btn = st.button("Submit", on_click=render_rivals, args=(website,))
+    col1, col2 = st.columns([14, 1])
+    with col1:
+        website = st.text_input("👉 What's your website name?", placeholder="microsoft.com")
+    with col2:
+        st.text("")
+        st.text("")
+        btn = st.button("Submit", on_click=render_rivals, args=(website,))
 
     if st.session_state.loading:
         with st.spinner("Scraping data... This may take a moment."):
             st.empty()
     else:
         if st.session_state.data:
-            st.success("Here is your competitor analysis:")
             company = st.session_state.data.get("company", {})
             competitors_data = st.session_state.data.get("competitors", [])
             company_competitors = company.get("competitors", [])
@@ -101,6 +105,9 @@ def main():
                     }
             # Create dataframe if we have data
             if rows:
+                st.markdown(f'<div>{company.get("description", "N/A")}</div>',unsafe_allow_html=True)
+                st.text("")
+                st.success("Here is your competitor analysis:")
                 df = pd.DataFrame.from_dict(rows, orient="index")
                 df_melt = df.reset_index().melt(
                     id_vars="index", var_name="Metric", value_name="Value"
