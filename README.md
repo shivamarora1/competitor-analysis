@@ -1,3 +1,7 @@
+> This repository is a submission for the [BrightData Realtime AI Agent Challenge](https://dev.to/challenges/brightdata-2025-05-07).<br>
+> You can read the full submission article [here](https://dev.to/coder_dragon/rival-guru-know-realtime-facts-about-your-competitors-aa8).
+
+
 # Rival Guru
 
 Want to beat the competition? Start by understanding them. This tool helps you analyze competitors in your market space, track their features, and identify opportunities for differentiation.
