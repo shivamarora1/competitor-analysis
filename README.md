@@ -9,6 +9,8 @@ This project provides a Streamlit-based web application for tracking and analyzi
 - Identify market gaps and opportunities
 - Generate insights based on collected data
 
+This project uses Bright data browser api , so make sure you have account in bright data and created `API_TOKEN` and `BROWSER_AUTH`
+
 ## Setup Instructions
 
 ### Prerequisites
@@ -76,3 +78,5 @@ competitor-analysis/
 │   └── mcp_client.py
 └── README.md              # Project documentation
 ```
+
+## Demo
