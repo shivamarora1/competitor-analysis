@@ -80,3 +80,5 @@ competitor-analysis/
 ```
 
 ## Demo
+![clideo_editor_37225d9247144f9580128c009f3b691b](https://github.com/user-attachments/assets/f902515c-d18e-4323-9f0e-53ab80264e63)
+
