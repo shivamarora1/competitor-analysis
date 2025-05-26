@@ -1,4 +1,4 @@
-# Competitor Analysis
+# Rival Guru
 
 Want to beat the competition? Start by understanding them. This tool helps you analyze competitors in your market space, track their features, and identify opportunities for differentiation.
 
